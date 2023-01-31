@@ -29,15 +29,18 @@ For training and evaluating on Samsum, we use dataset provided by [Hugging Face 
 ```
 https://drive.google.com/drive/folders/1CuZaU5Xw0AiIPaBTRrjToFkktS7_6KwG?usp=share_link
 ```
-and put it under the directory of SICK_summarization/data/DialogSum_data.
+and put it under the directory of SICK_summarization/data/DialogSum_Data.
 ```
-mkdir data/DialogSum_data
+mkdir data/DialogSum_Data
 ```
-Put your downloaded dataset under the data directory in order to proceed the experiment.\
 
 Also, you could download the preprocessed commonsense data from the url below,
 ```
 https://drive.google.com/drive/folders/1z1MXBGJ3pt0lC5dneMfFrQgxXTD8Iqrr?usp=share_link
+```
+and put it under the directory of SICK_summarization/data/COMET_data.
+```
+mkdir data/COMET_data
 ```
 
 To process the commonsense data, we used [COMET-ATOMIC 2020](https://github.com/allenai/comet-atomic-2020) and [PARACOMET](https://github.com/skgabriel/paracomet) github repository. Huge thanks to the authors for providing the awesome code:)
