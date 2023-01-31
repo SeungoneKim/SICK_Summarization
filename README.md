@@ -3,7 +3,7 @@ The official repository for the paper "Mind the Gap! Injecting Commonsense Knowl
 
 Paper Link : https://arxiv.org/abs/2209.00930
 
-Overview of method, SICK (\underline{S}ummarizing with Injected Commonsense Knowledge).
+Overview of method, SICK (Summarizing with Injected Commonsense Knowledge).
 <p align="center">
   <img src="./SICK_overview.png" width="100%" height="80%">
 </p>
