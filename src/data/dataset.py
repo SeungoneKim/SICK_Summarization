@@ -63,36 +63,36 @@ class SamsumDataset(Dataset):
             if self.paracomet == False:
                 ##### COMET #####
                 with open(
-                    f"/content/SICK_Summarization/data/COMET_data/comet/dialogue/samsum/comet_{self.split_type}.json"
+                    f"/content/SICK_Summarization/src/data/COMET_Data/comet/dialogue/samsum/comet_{self.split_type}.json"
                 ) as f:
                     self.dialogue_comet_inference = json.load(f)
 
                 if self.roberta:
                     print("ROBERTA ON!")
                     with open(
-                        f"/content/SICK_Summarization/data/COMET_data/comet/dialogue/samsum/roberta_nli/roberta_classified_top1_{self.split_type}.json"
+                        f"/content/SICK_Summarization/src/data/COMET_Data/comet/dialogue/samsum/roberta_nli/roberta_classified_top1_{self.split_type}.json"
                     ) as f:
                         self.roberta_classified_z = json.load(f)
                 if self.sentence_transformer:
                     with open(
-                        f"/content/SICK_Summarization/data/COMET_data/comet/dialogue/samsum/sentence_transformer/comet_{self.split_type}_z.json"
+                        f"/content/SICK_Summarization/src/data/COMET_Data/comet/dialogue/samsum/sentence_transformer/comet_{self.split_type}_z.json"
                     ) as f:
                         self.sentence_transformer_classified_z = json.load(f)
 
             else:
                 with open(
-                    f"/content/SICK_Summarization/data/COMET_data/paracomet/dialogue/samsum/dialog_{self.split_type}_split5_collated.json"
+                    f"/content/SICK_Summarization/src/data/COMET_Data/paracomet/dialogue/samsum/dialog_{self.split_type}_split5_collated.json"
                 ) as f:
                     self.dialogue_comet_inference = json.load(f)
                 if self.roberta:
                     print("ROBERTA ON!")
                     with open(
-                        f"/content/SICK_Summarization/data/COMET_data/paracomet/dialogue/samsum/roberta_nli/paracomet_samsum_roberta_classified_top1_{self.split_type}.json"
+                        f"/content/SICK_Summarization/src/data/COMET_Data/paracomet/dialogue/samsum/roberta_nli/paracomet_samsum_roberta_classified_top1_{self.split_type}.json"
                     ) as f:
                         self.roberta_classified_z = json.load(f)
                 if self.sentence_transformer:
                     with open(
-                        f"/content/SICK_Summarization/data/COMET_data/paracomet/dialogue/samsum/sentence_transformer/paracomet_{self.split_type}_z.json"
+                        f"/content/SICK_Summarization/src/data/COMET_Data/paracomet/dialogue/samsum/sentence_transformer/paracomet_{self.split_type}_z.json"
                     ) as f:
                         self.sentence_transformer_classified_z = json.load(f)
 
@@ -100,38 +100,38 @@ class SamsumDataset(Dataset):
             if self.split_type == "train":
                 if self.paracomet == False:  # plain COMET
                     with open(
-                        f"/content/SICK_Summarization/data/COMET_data/comet/summary/samsum/comet_train_w.json"
+                        f"/content/SICK_Summarization/src/data/COMET_Data/comet/summary/samsum/comet_train_w.json"
                     ) as f:
                         self.summary_comet_inference = json.load(f)
 
                     if self.roberta:
                         print("ROBERTA ON!")
                         with open(
-                            f"/content/SICK_Summarization/data/COMET_data/comet/summary/samsum/roberta_nli/roberta_classified_top1_w.json"
+                            f"/content/SICK_Summarization/src/data/COMET_Data/comet/summary/samsum/roberta_nli/roberta_classified_top1_w.json"
                         ) as f:
                             self.roberta_classified_w = json.load(f)
                     if self.sentence_transformer:
                         with open(
-                            f"/content/SICK_Summarization/data/COMET_data/comet/summary/samsum/sentence_transformer/comet_train_w.json"
+                            f"/content/SICK_Summarization/src/data/COMET_Data/comet/summary/samsum/sentence_transformer/comet_train_w.json"
                         ) as f:
                             self.sentence_transformer_classified_w = json.load(
                                 f
                             )
                 else:
                     with open(
-                        f"/content/SICK_Summarization/data/COMET_data/paracomet/summary/samsum/summary_train_split5_collated.json"
+                        f"/content/SICK_Summarization/src/data/COMET_Data/paracomet/summary/samsum/summary_train_split5_collated.json"
                     ) as f:
                         self.summary_comet_inference = json.load(f)
                     if self.roberta:
                         print("ROBERTA ON!")
                         with open(
-                            f"/content/SICK_Summarization/data/COMET_data/paracomet/summary/samsum/roberta_nli/roberta_classified_top1_w.json"
+                            f"/content/SICK_Summarization/src/data/COMET_Data/paracomet/summary/samsum/roberta_nli/roberta_classified_top1_w.json"
                         ) as f:
                             self.roberta_classified_w = json.load(f)
 
                     if self.sentence_transformer:
                         with open(
-                            f"/content/SICK_Summarization/data/COMET_data/paracomet/summary/samsum/sentence_transformer/paracomet_train_w.json"
+                            f"/content/SICK_Summarization/src/data/COMET_Data/paracomet/summary/samsum/sentence_transformer/paracomet_train_w.json"
                         ) as f:
                             self.sentence_transformer_classified_w = json.load(
                                 f
