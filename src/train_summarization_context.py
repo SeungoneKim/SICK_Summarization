@@ -18,9 +18,8 @@ from transformers import AutoTokenizer
 from transformers import AutoConfig, AutoModelForSeq2SeqLM
 from transformers import Seq2SeqTrainingArguments, Seq2SeqTrainer
 
-# from datasets import load_metric
-# from datasets import load_metric
-import evaluate
+
+from datasets import load_metric
 
 # import wandb
 from data.dataset import SamsumDataset_total, DialogsumDataset_total
@@ -160,8 +159,7 @@ if args.dataset_name not in dataset_list:
 
 # Set metric
 # metric = load_metric("rouge")
-# metric = load_metric("/content/SICK_Summarization/utils/rouge.py")
-metric = evaluate.load("/content/SICK_Summarization/utils/rouge.py")
+metric = load_metric("/content/SICK_Summarization/utils/rouge.py")
 
 # Load Tokenizer associated to the model
 tokenizer = AutoTokenizer.from_pretrained(args.model_name)
