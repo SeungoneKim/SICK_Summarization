@@ -1,6 +1,7 @@
 import os
 
 os.environ["WANDB_SILENT"] = "true"
+os.environ["WANDB_DISABLED"] = "true"
 
 import sys
 
@@ -18,7 +19,8 @@ from transformers import AutoConfig, AutoModelForSeq2SeqLM
 from transformers import Seq2SeqTrainingArguments, Seq2SeqTrainer
 
 # from datasets import load_metric
-from datasets import load_metric
+# from datasets import load_metric
+import evaluate
 
 # import wandb
 from data.dataset import SamsumDataset_total, DialogsumDataset_total
@@ -27,9 +29,9 @@ from data.dataset import SamsumDataset_total, DialogsumDataset_total
 parser = argparse.ArgumentParser()
 # Training hyperparameters
 parser.add_argument("--epoch", type=int, default=20)
-parser.add_argument("--train_batch_size", type=int, default=20)
+parser.add_argument("--train_batch_size", type=int, default=16)
 # parser.add_argument('--display_step',type=int, default=2000)
-parser.add_argument("--val_batch_size", type=int, default=4)
+parser.add_argument("--val_batch_size", type=int, default=2)
 parser.add_argument("--test_batch_size", type=int, default=1)
 # Model hyperparameters
 parser.add_argument("--model_name", type=str, default="facebook/bart-large")
@@ -158,7 +160,8 @@ if args.dataset_name not in dataset_list:
 
 # Set metric
 # metric = load_metric("rouge")
-metric = load_metric("/content/SICK_Summarization/utils/rouge.py")
+# metric = load_metric("/content/SICK_Summarization/utils/rouge.py")
+metric = evaluate.load("/content/SICK_Summarization/utils/rouge.py")
 
 # Load Tokenizer associated to the model
 tokenizer = AutoTokenizer.from_pretrained(args.model_name)
@@ -223,7 +226,7 @@ finetune_model.gradient_checkpointing_enable()
 finetune_model = finetune_model.to(device)
 
 
-# Set Training Arguments (& Connect to WANDB)
+# Set Training Arguments
 finetune_args = Seq2SeqTrainingArguments(
     output_dir=args.finetune_weight_path,
     overwrite_output_dir=True,
@@ -262,7 +265,7 @@ finetune_args = Seq2SeqTrainingArguments(
     generation_num_beams=5,
     metric_for_best_model="eval_rouge1",
     greater_is_better=True,
-    report_to="wandb",
+    # report_to="wandb",
 )
 
 
