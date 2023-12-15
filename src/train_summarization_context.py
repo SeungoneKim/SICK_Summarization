@@ -24,6 +24,8 @@ from datasets import load_metric
 # import wandb
 from data.dataset import SamsumDataset_total, DialogsumDataset_total
 
+nltk.download("punkt")
+
 # Set Argument Parser
 parser = argparse.ArgumentParser()
 # Training hyperparameters
