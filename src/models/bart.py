@@ -3,7 +3,7 @@ from transformers.models.bart.modeling_bart import *
 import sys
 
 sys.path.append("../")
-from SICK_Summarization.src.util import load_checkpoint
+from util import load_checkpoint
 
 
 #################################################################################################################################
