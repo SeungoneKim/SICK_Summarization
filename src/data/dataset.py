@@ -465,7 +465,7 @@ class SamsumDataset_total:
 
 def custom_load_dataset(type, split):
     if type == "dialogsum":
-        dir = f"./DialogSum_Data/dialogsum.{split}.jsonl"
+        dir = f"/content/SICK_Summarization/src/data/DialogSum_Data/dialogsum.{split}.jsonl"
         data = {"dialogue": [], "summary": [], "id": []}
         with open(dir, "r") as json_file:
             json_list = list(json_file)
@@ -544,9 +544,9 @@ class DialogsumDataset(Dataset):
             else:
                 print("COMET sentence-transformer")
 
-        ##################################################
+                ##################################################
 
-        self.data = custom_load_dataset("dialogsum", split=split_type)
+                self.data = custom_load_dataset("dialogsum", split=split_type)
         self.dialogue = self.data["dialogue"]
         self.summary = self.data["summary"]
         if split_type == "test":
@@ -563,19 +563,19 @@ class DialogsumDataset(Dataset):
                 ###########################
 
                 with open(
-                    f"../data/COMET_data/comet/dialogue/dialogsum/comet_{self.split_type}.json"
+                    f"/content/SICK_Summarization/src/data/COMET_Data/comet/dialogue/dialogsum/comet_{self.split_type}.json"
                 ) as f:
                     self.dialogue_comet_inference = json.load(f)
 
                 if self.roberta:
                     with open(
-                        f"../data/COMET_data/comet/dialogue/dialogsum/roberta_nli/roberta_classified_top1_{self.split_type}.json"
+                        f"/content/SICK_Summarization/src/data/COMET_Data/comet/dialogue/dialogsum/roberta_nli/roberta_classified_top1_{self.split_type}.json"
                     ) as f:
                         self.roberta_classified_z = json.load(f)
 
                 if self.sentence_transformer:
                     with open(
-                        f"../data/COMET_data/comet/dialogue/dialogsum/sentence_transformer/comet_{self.split_type}_z.json",
+                        f"/content/SICK_Summarization/src/data/COMET_Data/comet/dialogue/dialogsum/sentence_transformer/comet_{self.split_type}_z.json",
                         "r",
                     ) as f:
                         self.sentence_transformer_classified_z = json.load(f)
@@ -586,19 +586,19 @@ class DialogsumDataset(Dataset):
                 ###########################
 
                 with open(
-                    f"../data/COMET_data/paracomet/dialogue/dialogsum/dialog_{self.split_type}_split5_collated.json"
+                    f"/content/SICK_Summarization/src/data/COMET_Data/paracomet/dialogue/dialogsum/dialog_{self.split_type}_split5_collated.json"
                 ) as f:
                     self.dialogue_comet_inference = json.load(f)
 
                 if self.roberta:
                     with open(
-                        f"../data/COMET_data/paracomet/dialogue/dialogsum/roberta_nli/paracomet_dialogsum_roberta_classified_top1_{self.split_type}.json"
+                        f"/content/SICK_Summarization/src/data/COMET_Data/paracomet/dialogue/dialogsum/roberta_nli/paracomet_dialogsum_roberta_classified_top1_{self.split_type}.json"
                     ) as f:
                         self.roberta_classified_z = json.load(f)
 
                 if self.sentence_transformer:
                     with open(
-                        f"../data/COMET_data/paracomet/dialogue/dialogsum/sentence_transformer/paracomet_{self.split_type}_z.json",
+                        f"/content/SICK_Summarization/src/data/COMET_Data/paracomet/dialogue/dialogsum/sentence_transformer/paracomet_{self.split_type}_z.json",
                         "r",
                     ) as f:
                         self.sentence_transformer_classified_z = json.load(f)
@@ -610,19 +610,19 @@ class DialogsumDataset(Dataset):
                     # CODE FOR COMET
                     ######################
                     with open(
-                        f"../data/COMET_data/comet/summary/dialogsum/comet_train_w.json"
+                        f"/content/SICK_Summarization/src/data/COMET_Data/comet/summary/dialogsum/comet_train_w.json"
                     ) as f:
                         self.summary_comet_inference = json.load(f)
 
                     if self.roberta:
                         with open(
-                            f"../data/COMET_data/comet/dialogue/dialogsum/roberta_nli/roberta_classified_top1_w.json"
+                            f"/content/SICK_Summarization/src/data/COMET_Data/comet/dialogue/dialogsum/roberta_nli/roberta_classified_top1_w.json"
                         ) as f:
                             self.roberta_classified_w = json.load(f)
 
                     if sentence_transformer:
                         with open(
-                            f"../data/COMET_data/comet/summary/dialogsum/sentence_transformer/comet_train_w.json",
+                            f"/content/SICK_Summarization/src/data/COMET_Data/comet/summary/dialogsum/sentence_transformer/comet_train_w.json",
                             "r",
                         ) as f:
                             self.sentence_transformer_classified_w = json.load(
@@ -634,19 +634,19 @@ class DialogsumDataset(Dataset):
                     # CODE FOR PARACOMET
                     ########################
                     with open(
-                        "../data/COMET_data/paracomet/summary/dialogsum/summary_train_split5_collated.json"
+                        "/content/SICK_Summarization/src/data/COMET_Data/paracomet/summary/dialogsum/summary_train_split5_collated.json"
                     ) as f:
                         self.summary_comet_inference = json.load(f)
 
                     if self.roberta:
                         with open(
-                            "../data/COMET_data/paracomet/summary/dialogsum/roberta_nli/roberta_classified_top1_w.json"
+                            "/content/SICK_Summarization/src/data/COMET_Data/paracomet/summary/dialogsum/roberta_nli/roberta_classified_top1_w.json"
                         ) as f:
                             self.roberta_classified_w = json.load(f)
 
                     if sentence_transformer:
                         with open(
-                            "../data/COMET_data/paracomet/summary/dialogsum/sentence_transformer/paracomet_train_w.json",
+                            "/content/SICK_Summarization/src/data/COMET_Data/paracomet/summary/dialogsum/sentence_transformer/paracomet_train_w.json",
                             "r",
                         ) as f:
                             self.sentence_transformer_classified_w = json.load(

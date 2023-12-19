@@ -9,6 +9,8 @@ sys.path.append("../")
 import nltk
 import numpy as np
 
+nltk.download("punkt")
+
 # import tdqm
 import argparse
 import torch
