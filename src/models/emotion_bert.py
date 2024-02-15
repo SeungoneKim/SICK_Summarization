@@ -30,7 +30,7 @@ class EmotionBERT:
         ]
 
     # Input it's a dialogue: list[str]
-    def predict(self, sentence: str) -> list[str]:
+    def predict(self, sentence: str):
         encoding = self.tokenizer(sentence, return_tensors="pt")
         encoding = {k: v.to(self.model.device) for k, v in encoding.items()}
         outputs = self.model(**encoding)
