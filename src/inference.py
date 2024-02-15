@@ -22,6 +22,8 @@ from datasets import load_metric
 from data.dataset import (
     SamsumDataset_total,
     DialogsumDataset_total,
+    MediasumDataset_total,
+    TweetsummDataset_total,
 )
 from models.bart import (
     BartForConditionalGeneration_DualDecoder,
