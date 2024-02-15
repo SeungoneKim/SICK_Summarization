@@ -6,7 +6,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader, SequentialSampler
 from datasets import load_dataset
-import models.emotion_bert as EmotionBERT
+from models.emotion_bert import EmotionBERT
 import os
 import spacy
 import re
