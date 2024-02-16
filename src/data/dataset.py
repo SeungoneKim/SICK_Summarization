@@ -183,7 +183,7 @@ class SamsumDataset(Dataset):
             )
         else:
             model_emotion_extractor = EmotionBERT(
-                path_load="/content/drive/MyDrive/NLP_Project/out/",
+                path_load="/content/SICK_Summarization/src/data/BERT_model",
                 path_save="",
             )
             if self.paracomet == False:  # plain COMET
@@ -710,7 +710,7 @@ class DialogsumDataset(Dataset):
             )
         else:
             model_emotion_extractor = EmotionBERT(
-                path_load="/content/drive/MyDrive/NLP_Project/out/",
+                path_load="/content/SICK_Summarization/src/data/BERT_model",
                 path_save="",
             )
             if self.split_type == "validation":
