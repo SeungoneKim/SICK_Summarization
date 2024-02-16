@@ -12,6 +12,11 @@ import spacy
 import re
 import random
 
+MODEL_EMOTION_EXTRACTOR = EmotionBERT(
+    path_load="/content/SICK_Summarization/src/data/BERT_model",
+    path_save="",
+)
+
 
 class SamsumDataset(Dataset):
     def __init__(
@@ -182,10 +187,6 @@ class SamsumDataset(Dataset):
                 return_tensors="pt",
             )
         else:
-            model_emotion_extractor = EmotionBERT(
-                path_load="/content/SICK_Summarization/src/data/BERT_model",
-                path_save="",
-            )
             if self.paracomet == False:  # plain COMET
                 try:
                     dia = self.dialogue_comet_inference[self.id[index]]
@@ -200,7 +201,7 @@ class SamsumDataset(Dataset):
                         )
                         sentence = sent["sentence"].strip()
                         # array of emotions
-                        emotions = model_emotion_extractor.predict(sentence)
+                        emotions = MODEL_EMOTION_EXTRACTOR.predict(sentence)
                         if self.roberta:
                             commonsense = self.roberta_classified_z[
                                 self.id[index]
@@ -255,7 +256,7 @@ class SamsumDataset(Dataset):
                     dialogue = ""
                     for sent_idx, sent in dia.items():
                         sentence = sent["sentence"].strip()
-                        emotions = model_emotion_extractor.predict(sentence)
+                        emotions = MODEL_EMOTION_EXTRACTOR.predict(sentence)
 
                         person = sentence.split()[0]
 
@@ -709,10 +710,6 @@ class DialogsumDataset(Dataset):
                 return_tensors="pt",
             )
         else:
-            model_emotion_extractor = EmotionBERT(
-                path_load="/content/SICK_Summarization/src/data/BERT_model",
-                path_save="",
-            )
             if self.split_type == "validation":
                 dialog_id = f"dev_{self.id[index]}"
 
@@ -728,7 +725,7 @@ class DialogsumDataset(Dataset):
                     relation = cur_dialog_data[str(sentence_idx)]["relation"]
                     commonsense = cur_dialog_data[str(sentence_idx)]["out"]
 
-                    emotions = model_emotion_extractor(sentence)
+                    emotions = MODEL_EMOTION_EXTRACTOR(sentence)
                     emotion_phrase_injection = ""
                     if emotions:
                         for emotion in emotions:
@@ -758,7 +755,7 @@ class DialogsumDataset(Dataset):
                         ]
                         commonsense = cur_dialog_data[str(sentence_idx)]["out"]
 
-                        emotions = model_emotion_extractor(sentence)
+                        emotions = MODEL_EMOTION_EXTRACTOR(sentence)
                         emotion_phrase_injection = ""
                         if emotions:
                             for emotion in emotions:
@@ -867,7 +864,7 @@ class DialogsumDataset(Dataset):
                         except:
                             continue
 
-                    emotions = model_emotion_extractor(utterance)
+                    emotions = MODEL_EMOTION_EXTRACTOR(utterance)
                     emotion_phrase_injection = ""
                     if emotions:
                         for emotion in emotions:
@@ -901,7 +898,7 @@ class DialogsumDataset(Dataset):
                     commonsense = sent[self.relation][0].strip()
 
                     dialogue += sentence + "\n"
-                    emotions = model_emotion_extractor(utterance)
+                    emotions = MODEL_EMOTION_EXTRACTOR(utterance)
 
                     if sentence != commonsense:
                         if (
