@@ -12,7 +12,7 @@ class EmotionBERT:
         self.path_load = path_load
         self.path_save = path_save
         self.model = AutoModelForSequenceClassification.from_pretrained(
-            self.path_load
+            self.path_load, use_safetensors=True
         )
         self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
         self.labels = [
