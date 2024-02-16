@@ -44,7 +44,6 @@ class EmotionBERT:
         if any(probs >= 0.4):
             probs = probs.detach().numpy()
             probs = probs / sum(probs)
-            print(probs)
             percentile = 10
             quantile = np.percentile(probs, 100 - percentile)
             mask = probs >= quantile
