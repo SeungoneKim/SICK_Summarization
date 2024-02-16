@@ -9,7 +9,7 @@ class EmotionBERT:
         self,
         path_load: str = None,
         path_save: str = None,
-        tokenizer_name: str = "bert-base-uncased",
+        tokenizer_name: str = "distilbert-base-uncased",
     ) -> None:
         self.path_load = path_load
         self.path_save = path_save
