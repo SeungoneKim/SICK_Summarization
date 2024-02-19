@@ -7,6 +7,7 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader, SequentialSampler
 from datasets import load_dataset
 from models.emotion_bert import EmotionBERT
+from models.topic_bert import TopicBERT
 import os
 import spacy
 import re
@@ -16,6 +17,8 @@ MODEL_EMOTION_EXTRACTOR = EmotionBERT(
     path_load="/content/SICK_Summarization/src/data/BERT_model",
     path_save="",
 )
+
+MODEL_TOPIC_EXTRACTOR = TopicBERT(confidence_threshold=0.25)
 
 
 class SamsumDataset(Dataset):
@@ -32,6 +35,8 @@ class SamsumDataset(Dataset):
         supervision_relation="xIntent",
         roberta=False,
         sentence_transformer=False,
+        is_emotion_injection=False,
+        is_topic_injection=False,
     ):
         self.encoder_max_len = encoder_max_len
         self.decoder_max_len = decoder_max_len
@@ -52,6 +57,8 @@ class SamsumDataset(Dataset):
 
         self.roberta = roberta
         self.sentence_transformer = sentence_transformer
+        self.is_emotion_injection = is_emotion_injection
+        self.is_topic_injection = is_topic_injection
         print(self.relation)
         ##################################################
 
@@ -453,6 +460,8 @@ class SamsumDataset_total:
         supervision_relation="isAfter",
         roberta=False,
         sentence_transformer=False,
+        is_emotion_injection=False,
+        is_topic_injection=False,
     ):
         self.train_dataset = SamsumDataset(
             encoder_max_len,
@@ -557,6 +566,8 @@ class DialogsumDataset(Dataset):
         supervision_relation="isAfter",
         roberta=False,
         sentence_transformer=False,
+        is_emotion_injection=False,
+        is_topic_injection=False,
     ):
         self.encoder_max_len = encoder_max_len
         self.decoder_max_len = decoder_max_len
@@ -1137,6 +1148,8 @@ class DialogsumDataset_total:
         roberta=False,
         supervision_relation="isAfter",
         sentence_transformer=False,
+        is_emotion_injection=False,
+        is_topic_injection=False,
     ):
         self.train_dataset = DialogsumDataset(
             encoder_max_len,
