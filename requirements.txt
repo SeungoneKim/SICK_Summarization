@@ -1,6 +1,8 @@
 #transformers==4.13.0
 transformers
 accelerate
+bertopic
+safetensors
 nltk
 rouge_score
 bert_score
