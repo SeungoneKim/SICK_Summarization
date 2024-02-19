@@ -6,5 +6,5 @@ bert_score
 py7zr
 metrics
 datasets
-bertopic
+bertopic --install-option="--no-deps"
 safetensors
