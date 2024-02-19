@@ -18,3 +18,6 @@ class TopicBERT:
         except:
             pass
         return label
+
+
+# addiamo cose a caso yay
