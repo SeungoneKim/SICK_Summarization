@@ -187,7 +187,6 @@ class SamsumDataset(Dataset):
         return self.data_len
 
     def __getitem__(self, index):
-        print('WORKING WORKING WORKING WORKING WORKING WORKING WORKING WORKING')
         if self.extra_context == False:
             # (1, sequence_length)
             encoded_dialogue = self.tokenizer(
@@ -335,6 +334,8 @@ class SamsumDataset(Dataset):
                                     + "."
                                     + "\n"
                                 )
+                    
+                    print('WORKING WORKING WORKING WORKING WORKING WORKING WORKING WORKING')
                     if self.is_topic_injection:
                         topics = MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
                         if topics:
