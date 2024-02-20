@@ -20,6 +20,7 @@ MODEL_EMOTION_EXTRACTOR = EmotionBERT(
 
 MODEL_TOPIC_EXTRACTOR = TopicBERT(confidence_threshold=0.25)
 
+# RPOVAAAAA
 
 class SamsumDataset(Dataset):
     def __init__(
