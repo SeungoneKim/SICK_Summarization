@@ -203,6 +203,7 @@ class SamsumDataset(Dataset):
                     dia = self.dialogue_comet_inference[self.id[index]]
 
                     dialogue = ""
+                    dialogue_for_topics = []
                     for sent_idx, sent in enumerate(dia):
                         person = (
                             sent["speaker"]
@@ -211,6 +212,9 @@ class SamsumDataset(Dataset):
                             .strip()
                         )
                         sentence = sent["sentence"].strip()
+                        # TopicModel
+                        if self.is_topic_injection:
+                            dialogue_for_topics.append(sentence)
 
                         if self.is_emotion_injection:
                             # array of emotions
@@ -261,6 +265,22 @@ class SamsumDataset(Dataset):
                                     + "\n"
                                 )
 
+                    if self.is_topic_injection:
+                        topics = MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
+                        if topics:
+                            topic_phrase_injection = ""
+                            for topic in topics:
+                                topic_phrase_injection += topic + ", "
+                            topic_phrase_injection = topic_phrase_injection[
+                                :-2
+                            ]
+                            dialogue += (
+                                "Some topics related to this dialogue are "
+                                + topic_phrase_injection
+                                + "."
+                                + "\n"
+                            )
+
                 except KeyError:
                     print("key error")
                     dialogue = self.dialogue[index]
@@ -269,10 +289,14 @@ class SamsumDataset(Dataset):
                 try:
                     dia = self.dialogue_comet_inference[self.id[index]]
                     dialogue = ""
+                    dialogue_for_topics = []
                     for sent_idx, sent in dia.items():
                         sentence = sent["sentence"].strip()
                         if self.is_emotion_injection:
                             emotions = MODEL_EMOTION_EXTRACTOR.predict(sentence)
+                        # TopicModel
+                        if self.is_topic_injection:
+                            dialogue_for_topics.append(sentence)
 
                         person = sentence.split()[0]
 
@@ -311,6 +335,21 @@ class SamsumDataset(Dataset):
                                     + "."
                                     + "\n"
                                 )
+                    if self.is_topic_injection:
+                        topics = MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
+                        if topics:
+                            topic_phrase_injection = ""
+                            for topic in topics:
+                                topic_phrase_injection += topic + ", "
+                            topic_phrase_injection = topic_phrase_injection[
+                                :-2
+                            ]
+                            dialogue += (
+                                "Some topics related to this dialogue are "
+                                + topic_phrase_injection
+                                + "."
+                                + "\n"
+                            )
 
                 except (
                     KeyError
@@ -743,6 +782,7 @@ class DialogsumDataset(Dataset):
                     dialog_id
                 ]
                 dialogue = ""
+                dialogue_for_topics = []
                 for sentence_idx in range(len(cur_dialog_data.keys())):
                     sentence = cur_dialog_data[str(sentence_idx)]["sentence"]
                     relation = cur_dialog_data[str(sentence_idx)]["relation"]
@@ -759,6 +799,9 @@ class DialogsumDataset(Dataset):
                                 + emotion_phrase_injection[:-2]
                                 + "."
                             )
+                    
+                    # TopicModel
+                    dialogue_for_topics.append(sentence)
 
                     dialogue += sentence + "\n"
                     dialogue += "<I> "
@@ -766,10 +809,27 @@ class DialogsumDataset(Dataset):
                     if self.is_emotion_injection:
                         dialogue += emotion_phrase_injection
                     dialogue += " </I>" + "\n"
+                
+                if self.is_topic_injection:
+                    topics = MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
+                    if topics:
+                        topic_phrase_injection = ""
+                        for topic in topics:
+                            topic_phrase_injection += topic + ", "
+                        topic_phrase_injection = topic_phrase_injection[
+                            :-2
+                        ]
+                        dialogue += (
+                            "Some topics related to this dialogue are "
+                            + topic_phrase_injection
+                            + "."
+                            + "\n"
+                        )
 
             elif self.roberta:
                 cur_dialog_data = self.roberta_classified_z[dialog_id]
                 dialogue = ""
+                dialogue_for_topics = []
                 for sentence_idx in range(len(cur_dialog_data.keys())):
                     try:
                         sentence = cur_dialog_data[str(sentence_idx)][
@@ -792,6 +852,9 @@ class DialogsumDataset(Dataset):
                                     + "."
                                 )
 
+                        # TopicModel
+                        dialogue_for_topics.append(sentence)
+
                         dialogue += sentence + "\n"
                         dialogue += "<I> "
                         dialogue += commonsense + ". "
@@ -800,6 +863,22 @@ class DialogsumDataset(Dataset):
                         dialogue += " </I>" + "\n"
                     except KeyError:
                         continue
+                
+                if self.is_topic_injection:
+                    topics = MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
+                    if topics:
+                        topic_phrase_injection = ""
+                        for topic in topics:
+                            topic_phrase_injection += topic + ", "
+                        topic_phrase_injection = topic_phrase_injection[
+                            :-2
+                        ]
+                        dialogue += (
+                            "Some topics related to this dialogue are "
+                            + topic_phrase_injection
+                            + "."
+                            + "\n"
+                        )
 
             elif self.paracomet == False:
                 #######################
@@ -910,6 +989,24 @@ class DialogsumDataset(Dataset):
                             dialogue += emotion_phrase_injection
                         dialogue += " </I>" + "\n"
                     idx += 1
+            
+                # TopicModel: here we can use the variable 'splitted_sentences' instead of 'dialogue_for_topics' and altready predict topics                  
+                if self.is_topic_injection:
+                    topics = MODEL_TOPIC_EXTRACTOR.predict(splitted_sentences)
+                    if topics:
+                        topic_phrase_injection = ""
+                        for topic in topics:
+                            topic_phrase_injection += topic + ", "
+                        topic_phrase_injection = topic_phrase_injection[
+                            :-2
+                        ]
+                        dialogue += (
+                            "Some topics related to this dialogue are "
+                            + topic_phrase_injection
+                            + "."
+                            + "\n"
+                        )
+
             ############################### PARACOMET START #######################################################
             else:
                 if self.split_type == "validation":
@@ -921,10 +1018,15 @@ class DialogsumDataset(Dataset):
                         self.split_type + "_" + self.id[index]
                     ]
                 dialogue = ""
+                dialogue_for_topics = []
+                
                 for _, sent in dia.items():
                     sentence = sent["sentence"].strip()
                     person = sentence.split()[0]
                     commonsense = sent[self.relation][0].strip()
+
+                    # TopicModel
+                    dialogue_for_topics.append(sentence)
 
                     dialogue += sentence + "\n"
                     if self.is_emotion_injection:
@@ -990,6 +1092,22 @@ class DialogsumDataset(Dataset):
                                     + "</I>"
                                     + "\n"
                                 )
+
+                if self.is_topic_injection:
+                    topics = MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
+                    if topics:
+                        topic_phrase_injection = ""
+                        for topic in topics:
+                            topic_phrase_injection += topic + ", "
+                        topic_phrase_injection = topic_phrase_injection[
+                            :-2
+                        ]
+                        dialogue += (
+                            "Some topics related to this dialogue are "
+                            + topic_phrase_injection
+                            + "."
+                            + "\n"
+                        )
 
             encoded_dialogue = self.tokenizer(
                 dialogue,
