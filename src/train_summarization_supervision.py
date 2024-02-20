@@ -21,8 +21,8 @@ from transformers import AutoConfig, AutoModelForSeq2SeqLM
 from transformers import Seq2SeqTrainingArguments, Seq2SeqTrainer
 from datasets import load_metric
 import wandb
-from data.dataset import SamsumDataset_total, DialogsumDataset_total, MediasumDataset_total, TweetsummDataset_total
-from models.bart import BartForConditionalGeneration_DualDecoder
+from dataset import SamsumDataset_total, DialogsumDataset_total, MediasumDataset_total, TweetsummDataset_total
+from bart import BartForConditionalGeneration_DualDecoder
 from src.trainer import DualDecoderTrainer
 
 # Set Argument Parser

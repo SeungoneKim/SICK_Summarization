@@ -21,14 +21,14 @@ from transformers import AutoConfig, AutoModelForSeq2SeqLM, AutoModelForCausalLM
 from transformers import Seq2SeqTrainingArguments, Seq2SeqTrainer
 from datasets import load_metric
 import wandb
-from data.dataset import SamsumDataset_total, DialogsumDataset_total, MediasumDataset_total, TweetsummDataset_total
+from dataset import SamsumDataset_total, DialogsumDataset_total, MediasumDataset_total, TweetsummDataset_total
 #from models.bart import BartForConditionalGeneration, PegasusForConditionalGeneration, T5ForConditionalGeneration
 from src.trainer import DialoGPTTrainer
 
 # Set Argument Parser
 parser = argparse.ArgumentParser()
 # Training hyperparameters
-parser.add_argument('--epoch', type=int, default=15)
+parser.add_argument('--epoch', type=int, default=20)
 parser.add_argument('--train_batch_size', type=int, default=20)
 #parser.add_argument('--display_step',type=int, default=2000)
 parser.add_argument('--val_batch_size',type=int, default=4)

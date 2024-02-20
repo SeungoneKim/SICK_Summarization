@@ -14,8 +14,8 @@ import torch
 from torch.utils.data import DataLoader, Dataset
 from transformers import BartForConditionalGeneration, AutoTokenizer
 from datasets import load_metric
-from data.dataset import SamsumDataset_total, DialogsumDataset_total, MediasumDataset_total, TweetsummDataset_total
-from models.bart import BartForConditionalGeneration_DualDecoder, BartForConditionalGeneration_DualHead
+from dataset import SamsumDataset_total, DialogsumDataset_total, MediasumDataset_total, TweetsummDataset_total
+from bart import BartForConditionalGeneration_DualDecoder, BartForConditionalGeneration_DualHead
 from tqdm import tqdm
 
 # Set Argument Parser
@@ -85,6 +85,7 @@ elif args.train_configuration == "context":
     finetune_model = BartForConditionalGeneration.from_pretrained(args.model_checkpoint)
     extra_context = True
 elif args.train_configuration == "supervision":
+    print("This is the model:",args.model_checkpoint)
     finetune_model = BartForConditionalGeneration_DualDecoder.from_pretrained(args.model_checkpoint)
     extra_supervision = True
 elif args.train_configuration =="full":
@@ -292,3 +293,8 @@ with open(args.test_output_file_name,"a") as f:
     for i in total_decoded_preds:
         for sent in i:
             f.write(sent.replace("\n"," ")+"\n")
+
+
+
+
+

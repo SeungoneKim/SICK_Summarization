@@ -2,7 +2,7 @@ import transformers
 from transformers.models.bart.modeling_bart import *
 import sys
 sys.path.append('../')
-from utils.util import load_checkpoint
+from util import load_checkpoint
 
 #################################################################################################################################
 class BartModel_DualDecoder(BartPretrainedModel):

@@ -1,23 +1,43 @@
 import os
-os.environ['WANDB_SILENT']="true"
+# os.environ['WANDB_SILENT']="true"
+os.environ['WANDB_DISABLED']="true"
+
+import ssl
+
+# Attempt to bypass SSL certificate verification
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    pass
+else:
+    ssl._create_default_https_context = _create_unverified_https_context
+
+import nltk
+nltk.download('punkt')
 
 import sys
+
 sys.path.append('../')
+
 import argparse
 import random
 import json
-import nltk
+
 import numpy as np
+
 import torch
+
 import torch.nn as nn
+
 from torch.utils.data import Dataset, DataLoader, SequentialSampler
 from transformers import AutoTokenizer
 from transformers import AutoConfig, AutoModelForSeq2SeqLM
 from transformers import Seq2SeqTrainingArguments, Seq2SeqTrainer
 #from datasets import load_metric
+
 from datasets import load_metric
-import wandb
-from data.dataset import SamsumDataset_total, DialogsumDataset_total
+# import wandb
+from dataset import SamsumDataset_total, DialogsumDataset_total
 
 # Set Argument Parser
 parser = argparse.ArgumentParser()
@@ -58,8 +78,6 @@ parser.add_argument('--test_output_file_name',type=str, default='samsum_context_
 parser.add_argument('--relation',type=str,default="xReason")
 parser.add_argument('--supervision_relation',type=str,default='isAfter')
 args = parser.parse_args()
-
-
 # Set GPU
 print('######################################################################')
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -71,7 +89,7 @@ print('######################################################################')
 
 
 # Start WANDB Log (Set Logging API)
-wandb.init(project="ICSK4AS", reinit=True, entity='icsk4as')
+# wandb.init(project="ICSK4AS", reinit=True, entity='icsk4as')
 if args.use_paracomet:
     cs = "para"
     if args.use_roberta:
@@ -90,7 +108,7 @@ if args.use_sentence_transformer:
 print("#"*50)
 print(cs)
 print("#"*50)
-wandb.run.name = f"context_{args.dataset_name}_{args.relation}_{cs}_lr{str(args.init_lr)}"
+# wandb.run.name = f"context_{args.dataset_name}_{args.relation}_{cs}_lr{str(args.init_lr)}"
 
 
 # Define Global Values
@@ -309,4 +327,4 @@ with open(args.test_output_file_name,"w") as f:
         f.write(i.replace("\n","")+"\n")
 """
 # END WANDB log
-wandb.finish()
+# wandb.finish()
