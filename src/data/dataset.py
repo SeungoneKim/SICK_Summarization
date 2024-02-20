@@ -336,9 +336,7 @@ class SamsumDataset(Dataset):
                                 )
                     
                     if self.is_topic_injection:
-                        print('WORKING WORKING WORKING WORKING WORKING WORKING WORKING WORKING')
                         topics = MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
-                        print(topics)
                         if topics:
                             topic_phrase_injection = ""
                             for topic in topics:
