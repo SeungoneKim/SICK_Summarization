@@ -1340,7 +1340,7 @@ class DialogsumDataset(Dataset):
 
                 ##################################################
 
-                self.data = custom_load_dataset("dialogsum", split=split_type)
+        self.data = custom_load_dataset("dialogsum", split=split_type)
         self.dialogue = self.data["dialogue"]
         self.summary = self.data["summary"]
         if split_type == "test":
