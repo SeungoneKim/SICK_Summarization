@@ -1853,8 +1853,8 @@ class DialogsumDataset_total:
             roberta=roberta,
             supervision_relation=supervision_relation,
             sentence_transformer=sentence_transformer,
-            is_emotion_injection=is_emotion_injection,
-            is_topic_injection=is_topic_injection
+            # is_emotion_injection=is_emotion_injection,
+            # is_topic_injection=is_topic_injection
         )
         self.eval_dataset = DialogsumDataset(
             encoder_max_len,
@@ -1868,8 +1868,8 @@ class DialogsumDataset_total:
             roberta=roberta,
             supervision_relation=supervision_relation,
             sentence_transformer=sentence_transformer,
-            is_emotion_injection=is_emotion_injection,
-            is_topic_injection=is_topic_injection
+            # is_emotion_injection=is_emotion_injection,
+            # is_topic_injection=is_topic_injection
         )
         self.test_dataset = DialogsumDataset(
             encoder_max_len,
@@ -1883,8 +1883,8 @@ class DialogsumDataset_total:
             roberta=roberta,
             supervision_relation=supervision_relation,
             sentence_transformer=sentence_transformer,
-            is_emotion_injection=is_emotion_injection,
-            is_topic_injection=is_topic_injection
+            # is_emotion_injection=is_emotion_injection,
+            # is_topic_injection=is_topic_injection
         )
         print(self.train_dataset.data_len)
 
