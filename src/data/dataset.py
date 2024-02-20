@@ -13,16 +13,16 @@ import spacy
 import re
 import random
 
-MODEL_EMOTION_EXTRACTOR = EmotionBERT(
-    path_load="/content/SICK_Summarization/src/data/BERT_model",
-    path_save="",
-)
+# self.MODEL_EMOTION_EXTRACTOR = EmotionBERT(
+#     path_load="/content/SICK_Summarization/src/data/BERT_model",
+#     path_save="",
+# )
 
-MODEL_TOPIC_EXTRACTOR = TopicModel(
-    path_label_json='/content/SICK_Summarization/src/data/topic_labels.json',
-    confidence_threshold=0.25, # Not used now
-    top_k=10
-)
+# self.MODEL_TOPIC_EXTRACTOR = TopicModel(
+#     path_label_json='/content/SICK_Summarization/src/data/topic_labels.json',
+#     confidence_threshold=0.25, # Not used now
+#     top_k=10
+# )
 
 class SamsumDataset(Dataset):
     def __init__(
@@ -60,6 +60,15 @@ class SamsumDataset(Dataset):
 
         self.roberta = roberta
         self.sentence_transformer = sentence_transformer
+        self.MODEL_EMOTION_EXTRACTOR = EmotionBERT(
+            path_load="/content/SICK_Summarization/src/data/BERT_model",
+            path_save="",
+        )
+        self.MODEL_TOPIC_EXTRACTOR = TopicModel(
+            path_label_json='/content/SICK_Summarization/src/data/topic_labels.json',
+            confidence_threshold=0.25, # Not used now
+            top_k=10
+        )
         self.is_emotion_injection = is_emotion_injection
         self.is_topic_injection = is_topic_injection
         print(self.relation)
@@ -217,7 +226,7 @@ class SamsumDataset(Dataset):
 
                         if self.is_emotion_injection:
                             # array of emotions
-                            emotions = MODEL_EMOTION_EXTRACTOR.predict(sentence)
+                            emotions = self.MODEL_EMOTION_EXTRACTOR.predict(sentence)
 
                         if self.roberta:
                             commonsense = self.roberta_classified_z[
@@ -265,7 +274,7 @@ class SamsumDataset(Dataset):
                                 )
 
                     if self.is_topic_injection:
-                        topics = MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
+                        topics = self.MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
                         if topics:
                             topic_phrase_injection = ""
                             for topic in topics:
@@ -292,7 +301,7 @@ class SamsumDataset(Dataset):
                     for sent_idx, sent in dia.items():
                         sentence = sent["sentence"].strip()
                         if self.is_emotion_injection:
-                            emotions = MODEL_EMOTION_EXTRACTOR.predict(sentence)
+                            emotions = self.MODEL_EMOTION_EXTRACTOR.predict(sentence)
                         # TopicModel
                         if self.is_topic_injection:
                             dialogue_for_topics.append(sentence)
@@ -336,7 +345,7 @@ class SamsumDataset(Dataset):
                                 )
                     
                     if self.is_topic_injection:
-                        topics = MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
+                        topics = self.MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
                         if topics:
                             topic_phrase_injection = ""
                             for topic in topics:
@@ -637,6 +646,15 @@ class DialogsumDataset(Dataset):
         self.roberta = roberta
         self.sentence_transformer = sentence_transformer
 
+        self.MODEL_EMOTION_EXTRACTOR = EmotionBERT(
+            path_load="/content/SICK_Summarization/src/data/BERT_model",
+            path_save="",
+        )
+        self.MODEL_TOPIC_EXTRACTOR = TopicModel(
+            path_label_json='/content/SICK_Summarization/src/data/topic_labels.json',
+            confidence_threshold=0.25, # Not used now
+            top_k=10
+        )
         self.is_emotion_injection = is_emotion_injection
         self.is_topic_injection = is_topic_injection
 
@@ -795,7 +813,7 @@ class DialogsumDataset(Dataset):
                     commonsense = cur_dialog_data[str(sentence_idx)]["out"]
                     
                     if self.is_emotion_injection:
-                        emotions = MODEL_EMOTION_EXTRACTOR(sentence)
+                        emotions = self.MODEL_EMOTION_EXTRACTOR(sentence)
                         emotion_phrase_injection = ""
                         if emotions:
                             for emotion in emotions:
@@ -817,7 +835,7 @@ class DialogsumDataset(Dataset):
                     dialogue += " </I>" + "\n"
                 
                 if self.is_topic_injection:
-                    topics = MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
+                    topics = self.MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
                     if topics:
                         topic_phrase_injection = ""
                         for topic in topics:
@@ -847,7 +865,7 @@ class DialogsumDataset(Dataset):
                         commonsense = cur_dialog_data[str(sentence_idx)]["out"]
 
                         if self.is_emotion_injection:
-                            emotions = MODEL_EMOTION_EXTRACTOR(sentence)
+                            emotions = self.MODEL_EMOTION_EXTRACTOR(sentence)
                             emotion_phrase_injection = ""
                             if emotions:
                                 for emotion in emotions:
@@ -871,7 +889,7 @@ class DialogsumDataset(Dataset):
                         continue
                 
                 if self.is_topic_injection:
-                    topics = MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
+                    topics = self.MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
                     if topics:
                         topic_phrase_injection = ""
                         for topic in topics:
@@ -977,7 +995,7 @@ class DialogsumDataset(Dataset):
                             continue
                     
                     if self.is_emotion_injection:
-                        emotions = MODEL_EMOTION_EXTRACTOR(utterance)
+                        emotions = self.MODEL_EMOTION_EXTRACTOR(utterance)
                         emotion_phrase_injection = ""
                         if emotions:
                             for emotion in emotions:
@@ -998,7 +1016,7 @@ class DialogsumDataset(Dataset):
             
                 # TopicModel: here we can use the variable 'splitted_sentences' instead of 'dialogue_for_topics' and altready predict topics                  
                 if self.is_topic_injection:
-                    topics = MODEL_TOPIC_EXTRACTOR.predict(splitted_sentences)
+                    topics = self.MODEL_TOPIC_EXTRACTOR.predict(splitted_sentences)
                     if topics:
                         topic_phrase_injection = ""
                         for topic in topics:
@@ -1036,7 +1054,7 @@ class DialogsumDataset(Dataset):
 
                     dialogue += sentence + "\n"
                     if self.is_emotion_injection:
-                        emotions = MODEL_EMOTION_EXTRACTOR(utterance)
+                        emotions = self.MODEL_EMOTION_EXTRACTOR(utterance)
 
                     if sentence != commonsense:
                         if (
@@ -1100,7 +1118,7 @@ class DialogsumDataset(Dataset):
                                 )
 
                 if self.is_topic_injection:
-                    topics = MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
+                    topics = self.MODEL_TOPIC_EXTRACTOR.predict(dialogue_for_topics)
                     if topics:
                         topic_phrase_injection = ""
                         for topic in topics:
