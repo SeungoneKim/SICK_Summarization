@@ -214,6 +214,7 @@ class SamsumDataset(Dataset):
                         sentence = sent["sentence"].strip()
                         # TopicModel
                         if self.is_topic_injection:
+                            print('WORKING WORKING WORKING WORKING WORKING WORKING WORKING WORKING')
                             dialogue_for_topics.append(sentence)
 
                         if self.is_emotion_injection:
