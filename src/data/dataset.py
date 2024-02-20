@@ -24,7 +24,6 @@ MODEL_TOPIC_EXTRACTOR = TopicModel(
     top_k=10
 )
 
-
 class SamsumDataset(Dataset):
     def __init__(
         self,
@@ -188,6 +187,7 @@ class SamsumDataset(Dataset):
         return self.data_len
 
     def __getitem__(self, index):
+        print('WORKING WORKING WORKING WORKING WORKING WORKING WORKING WORKING')
         if self.extra_context == False:
             # (1, sequence_length)
             encoded_dialogue = self.tokenizer(
@@ -214,7 +214,6 @@ class SamsumDataset(Dataset):
                         sentence = sent["sentence"].strip()
                         # TopicModel
                         if self.is_topic_injection:
-                            print('WORKING WORKING WORKING WORKING WORKING WORKING WORKING WORKING')
                             dialogue_for_topics.append(sentence)
 
                         if self.is_emotion_injection:
