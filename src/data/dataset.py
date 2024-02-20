@@ -7,7 +7,7 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader, SequentialSampler
 from datasets import load_dataset
 from models.emotion_bert import EmotionBERT
-from models.topic_bert import TopicBERT
+from models.topic_model import TopicModel
 import os
 import spacy
 import re
@@ -18,9 +18,12 @@ MODEL_EMOTION_EXTRACTOR = EmotionBERT(
     path_save="",
 )
 
-MODEL_TOPIC_EXTRACTOR = TopicBERT(confidence_threshold=0.25)
+MODEL_TOPIC_EXTRACTOR = TopicModel(
+    path_label_json='/content/SICK_Summarization/src/data/topic_labels.json',
+    confidence_threshold=0.25, # Not used now
+    top_k=10
+)
 
-# RPOVAAAAA
 
 class SamsumDataset(Dataset):
     def __init__(
