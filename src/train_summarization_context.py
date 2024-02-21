@@ -246,7 +246,7 @@ finetune_args = Seq2SeqTrainingArguments(
     generation_num_beams=5,
     metric_for_best_model='eval_rouge1',
     greater_is_better=True,
-    report_to = 'wandb',
+    # report_to = 'wandb',
 )
 
 def compute_metrics(eval_pred):

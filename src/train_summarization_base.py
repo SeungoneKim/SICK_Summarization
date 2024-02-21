@@ -28,7 +28,7 @@ from src.trainer import DialoGPTTrainer
 # Set Argument Parser
 parser = argparse.ArgumentParser()
 # Training hyperparameters
-parser.add_argument('--epoch', type=int, default=20)
+parser.add_argument('--epoch', type=int, default=15)
 parser.add_argument('--train_batch_size', type=int, default=20)
 #parser.add_argument('--display_step',type=int, default=2000)
 parser.add_argument('--val_batch_size',type=int, default=4)

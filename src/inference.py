@@ -85,7 +85,6 @@ elif args.train_configuration == "context":
     finetune_model = BartForConditionalGeneration.from_pretrained(args.model_checkpoint)
     extra_context = True
 elif args.train_configuration == "supervision":
-    print("This is the model:",args.model_checkpoint)
     finetune_model = BartForConditionalGeneration_DualDecoder.from_pretrained(args.model_checkpoint)
     extra_supervision = True
 elif args.train_configuration =="full":
@@ -293,8 +292,3 @@ with open(args.test_output_file_name,"a") as f:
     for i in total_decoded_preds:
         for sent in i:
             f.write(sent.replace("\n"," ")+"\n")
-
-
-
-
-
