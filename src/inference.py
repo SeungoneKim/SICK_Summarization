@@ -30,6 +30,7 @@ parser.add_argument('--decoder_max_len', type=int, default=100)
 parser.add_argument('--use_paracomet',type=bool,default=False)
 parser.add_argument('--use_roberta',type=bool,default=False)
 parser.add_argument('--use_sentence_transformer',type=bool,default=False)
+parser.add_argument('--idiom', type=bool, default=False)
 parser.add_argument('--relation',type=str,default="xReason")
 parser.add_argument('--supervision_relation',type=str,default='isAfter')
 parser.add_argument('--num_beams', type=int, default=20)
@@ -123,7 +124,7 @@ tokenizer = AutoTokenizer.from_pretrained(args.model_checkpoint)
 
 # Set dataset
 if args.dataset_name=='samsum':
-    total_dataset = SamsumDataset_total(args.encoder_max_len,args.decoder_max_len,tokenizer,extra_context=True,extra_supervision=True,paracomet=args.use_paracomet,relation=args.relation,supervision_relation=args.supervision_relation,roberta=args.use_roberta, sentence_transformer=args.use_sentence_transformer)
+    total_dataset = SamsumDataset_total(args.encoder_max_len,args.decoder_max_len,tokenizer,extra_context=True,extra_supervision=True,paracomet=args.use_paracomet,relation=args.relation,supervision_relation=args.supervision_relation,roberta=args.use_roberta, sentence_transformer=args.use_sentence_transformer, idiom = args.idiom)
     test_dataset = total_dataset.getTestData()
 elif args.dataset_name=='dialogsum':
     total_dataset = DialogsumDataset_total(args.encoder_max_len,args.decoder_max_len,tokenizer,extra_context=True,extra_supervision=True,paracomet=args.use_paracomet,relation=args.relation,supervision_relation=args.supervision_relation, sentence_transformer=args.use_sentence_transformer, roberta=args.use_roberta)
