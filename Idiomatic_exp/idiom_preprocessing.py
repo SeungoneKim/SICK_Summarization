@@ -48,7 +48,11 @@ def augment_dialogue_entry(dialogue_entry, idioms, meanings):
     return dialogue_entry
 
 # Load SAMSum dataset
-samsum_data = load_dataset('path/to/samsum_dataset.json')
+
+json_path_train = "/content/drive/MyDrive/COMET_data/paracomet/dialogue/samsum/dialog_train_split5_collated.json"
+json_path_test = "/content/drive/MyDrive/COMET_data/paracomet/dialogue/samsum/dialog_test_split5_collated.json"
+json_path_validation = "/content/drive/MyDrive/COMET_data/paracomet/dialogue/samsum/dialog_validation_split5_collated.json"
+
 
 # Augment dialogues
 augmented_data = {}
